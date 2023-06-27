@@ -1,0 +1,2 @@
+# Read-It-Later
+"Read It Later" is a user-friendly web application that allows users to effortlessly save and organize articles they wish to read at a later time. With features like categorization, tagging, and customization, users can easily curate their own personalized reading list. This convenient tool ensures users never miss out on valuable content and promotes a seamless and enjoyable reading experience.
