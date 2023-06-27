@@ -1,0 +1,31 @@
+Uygulama Adı: 
+    Read it later*
+
+Uygulama Açıklama: 
+    Kullanıcının üye olup okumak istediği sitelerin linklerini kaydedebileceği web uygulaması. Site mobil uyumlu olacak. Kullanıcı kaydettiği linke 
+    tıkladığında otomatik olarak okunmuş sayacak ve okundu sekmesine taşınacak.
+
+Özellikler:
+    • Hesap oluşturma-silme
+    • Kullanıcı giriş-çıkış
+    • Kalıcı oturum (session)
+    • Link işlemleri
+    • Linkleri web sayfasının ön izlemesi ile görüntülemek
+    • Okundu sekmesi: tıklanan linklerin otomatik olarak okundu sekmesine taşınması veya manuel yapabilmek
+    • Arşiv özelliği
+    • Mobil uyumlu
+    • Listeler veya klasörler oluşturabilmek
+    • Klasörleri diğer kullanıcılarla paylaşmak
+    • Etiket özelliği
+
+Teknoloji:
+    • Html, css, javascript,
+    • Python,
+    • Django, bootstrap/react
+    • Sqlite
+
+Veritabanı:
+    • "users": id, user_name, password, user_id
+    • "bookmarks": id, bookmark_name, link, tag, is_readed, is_archived
+    • "tags": id, tag_name, ???
+
