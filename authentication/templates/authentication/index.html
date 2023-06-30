@@ -1,20 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-</head>
-<body>
-    <h1>Login:</h1>
+    {% extends "base.html" %}
 
-    <button type="submit"><a href="{% url 'bookmarks_index' %}">SignUp</a></button>
-    <button type="submit"><a href="{% url 'bookmarks_index' %}">SignIn</a></button>
-    <button type="submit"><a href="{% url 'bookmarks_index' %}">SignOut</a></button>
-
-    <br>
-    <button><a href="{% url 'bookmarks_index' %}">Return Home</a></button>
+    {% block title %}
+        Index
+    {% endblock %}
 
 
-</body>
-</html>
+    {% block content %}
+
+        <!-- If user logged in -->
+        {% if user.is_authenticated %}
+            <h1>Welcome {{user.first_name}} {{user.last_name}}!</h1>
+            <button type="submit"><a href="{% url 'auth_user_logout' %}">Sign Out</a></button>
+        {% else %}
+            <h1>Index:</h1>
+            <button type="submit"><a href="{% url 'auth_user_signup' %}">Sign Up</a></button>
+            <button type="submit"><a href="{% url 'auth_user_login' %}">Login</a></button>
+        {% endif %}
+
+        <br>
+        <button><a href="{% url 'bookmarks_index' %}">Return Home</a></button>
+
+    {% endblock %}

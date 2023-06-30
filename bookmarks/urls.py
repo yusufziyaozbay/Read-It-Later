@@ -5,5 +5,5 @@ from . import views
 #app_name = 'bookmarks'
 
 urlpatterns = [
-    path('', views.index, name='bookmarks_index'),
+    path('home/', views.index, name='bookmarks_index'),
 ]
