@@ -7,30 +7,35 @@
     <h1>Sign Up</h1>
 
     <form action="{% url 'auth_user_signup' %}" method="post">
+        <!-- If there is a message -->
+        {% for message in messages %}
+            <p>{{message}}</p>
+        {% endfor %}
+
         {% csrf_token %}
 
         <label for="username">User Name: </label>
-        <input type="text" name="username" id="username" placeholder="User name" autocomplete="off">
+        <input type="text" name="username" id="username" placeholder="User name" autocomplete="off" required>
         <br>
         
         <label for="fname">First Name: </label>
-        <input type="text" name="fname" id="fname" placeholder="First name" autocomplete="off">
+        <input type="text" name="fname" id="fname" placeholder="First name" autocomplete="off" required>
         <br>
 
         <label for="lname">Last Name: </label>
-        <input type="text" name="lname" id="lname" placeholder="Last name" autocomplete="off">
+        <input type="text" name="lname" id="lname" placeholder="Last name" autocomplete="off" required>
         <br>
 
         <label for="email">Email: </label>
-        <input type="email" name="email" id="email" placeholder="Email" autocomplete="off">
+        <input type="email" name="email" id="email" placeholder="Email" autocomplete="off" required>
         <br>
 
         <label for="password1">Password: </label>
-        <input type="password" name="password1" id="password1" placeholder="Password" autocomplete="off">
+        <input type="password" name="password1" id="password1" placeholder="Password" autocomplete="off" required>
         <br>
 
         <label for="password2">Password Again: </label>
-        <input type="password" name="password2" id="password2" placeholder="Confirm" autocomplete="off">
+        <input type="password" name="password2" id="password2" placeholder="Confirm" autocomplete="off" required>
         <br>
 
         <button type="submit">Sign Up</button>

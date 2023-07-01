@@ -13,6 +13,10 @@
             <button type="submit"><a href="{% url 'auth_user_logout' %}">Sign Out</a></button>
         {% else %}
             <h1>Index:</h1>
+            <!-- If there is a message -->
+            {% for message in messages %}
+                <p>{{message}}</p>
+            {% endfor %}
             <button type="submit"><a href="{% url 'auth_user_signup' %}">Sign Up</a></button>
             <button type="submit"><a href="{% url 'auth_user_login' %}">Login</a></button>
         {% endif %}

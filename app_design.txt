@@ -9,6 +9,7 @@ Uygulama Açıklama:
     • Hesap oluşturma-silme
     • Kullanıcı giriş-çıkış
     • Kalıcı oturum (session)
+    • Mail ile hesap doğrulama
     • Link işlemleri
     • Linkleri web sayfasının ön izlemesi ile görüntülemek
     • Okundu sekmesi: tıklanan linklerin otomatik olarak okundu sekmesine taşınması veya manuel yapabilmek

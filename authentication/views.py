@@ -17,12 +17,26 @@ def user_signup(request):
         email = request.POST['email']
         password1 = request.POST['password1']
         password2 = request.POST['password2']
+
+        # If passwords don't match
+        if password1 != password2:
+            error_message(request, 'Passwords do not match.')
         
+        # If username already exists
+        if User.objects.filter(username=username).exists():
+            messages.error(request, 'Username already exists.')
+            return redirect('/signup')
+        
+        # If mail already exists
+        if User.objects.filter(email=email).exists():
+            messages.error(request, 'Email already exists.')
+            return redirect('/signup')
+
+        # Create user
         myuser = User.objects.create_user(username, email, password1)
         myuser.first_name = fname
         myuser.last_name = lname
         myuser.save()
-
         messages.success(request, 'Your account has been successfully created.')
         return redirect('/login')
     else:
@@ -50,5 +64,12 @@ def user_login(request):
 
 def user_logout(request):
     logout(request)
+    messages.success(request, 'Logged out successfully')
     return redirect('/')
-    
+
+
+def error_message(request, message):
+    messages.error(request, message)
+    return redirect('/signup')
+
+
