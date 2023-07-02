@@ -7,6 +7,10 @@
 </head>
 <body>
     <h1>Read it later</h1>
+    {% if user.is_authenticated %}
+        <p>User: {{user.username}}</p>
+    {% endif %}
+
 
     <button type="submit"><a href="{% url 'auth_index' %}">Authentication App -></a></button>
 </body>

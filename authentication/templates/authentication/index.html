@@ -10,7 +10,12 @@
         <!-- If user logged in -->
         {% if user.is_authenticated %}
             <h1>Welcome {{user.first_name}} {{user.last_name}}!</h1>
+            <!-- If there is a message -->
+            {% for message in messages %}
+                <p>{{message}}</p>
+            {% endfor %}
             <button type="submit"><a href="{% url 'auth_user_logout' %}">Sign Out</a></button>
+            
         {% else %}
             <h1>Index:</h1>
             <!-- If there is a message -->

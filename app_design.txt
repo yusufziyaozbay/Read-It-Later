@@ -6,6 +6,7 @@ Uygulama Açıklama:
     tıkladığında otomatik olarak okunmuş sayacak ve okundu sekmesine taşınacak.
 
 Özellikler:
+    • requirements.txt dosyası oluştur
     • Hesap oluşturma-silme
     • Kullanıcı giriş-çıkış
     • Kalıcı oturum (session)
