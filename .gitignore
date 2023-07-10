@@ -4,5 +4,8 @@
 env/
 venv/
 
-# ALL .log files
+# All .log files
 *.log
+
+# All txt files
+*.txt
