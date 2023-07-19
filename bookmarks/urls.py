@@ -6,4 +6,6 @@ from . import views
 
 urlpatterns = [
     path('home/', views.index, name='bookmarks_index'),
+    path('add/', views.add, name='bookmarks_add'),
+    path('edit/<int:id>', views.edit, name='bookmarks_edit')
 ]

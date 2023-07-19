@@ -1,4 +1,4 @@
-    {% extends "base.html" %}
+{% extends "authentication/base.html" %}
 
     {% block title %}
         Index
@@ -7,26 +7,31 @@
 
     {% block content %}
 
-        <!-- If user logged in -->
-        {% if user.is_authenticated %}
-            <h1>Welcome {{user.first_name}} {{user.last_name}}!</h1>
-            <!-- If there is a message -->
-            {% for message in messages %}
-                <p>{{message}}</p>
-            {% endfor %}
-            <button type="submit"><a href="{% url 'auth_user_logout' %}">Sign Out</a></button>
-            
-        {% else %}
-            <h1>Index:</h1>
-            <!-- If there is a message -->
-            {% for message in messages %}
-                <p>{{message}}</p>
-            {% endfor %}
-            <button type="submit"><a href="{% url 'auth_user_signup' %}">Sign Up</a></button>
-            <button type="submit"><a href="{% url 'auth_user_login' %}">Login</a></button>
-        {% endif %}
+        <div class="card">
+            <div class="card-body">
 
-        <br>
-        <button><a href="{% url 'bookmarks_index' %}">Return Home</a></button>
+                <!-- If user logged in -->
+                {% if user.is_authenticated %}
+                    <h2 class="card-title">Welcome {{user.first_name}} {{user.last_name}}!</h2>
+                    <!-- If there is a message -->
+                    {% for message in messages %}
+                        <p class="card-text">{{message}}</p>
+                    {% endfor %}
+                    <button class="btn" type="submit"><a href="{% url 'auth_user_logout' %}">Sign Out</a></button>
+                
+                {% else %}
+                    <h2 class="card-title">Index:</h2>
+                    <!-- If there is a message -->
+                    {% for message in messages %}
+                        <p class="card-text">{{message}}</p>
+                    {% endfor %}
+                    <a class="btn btn-primary" href="{% url 'auth_user_signup' %}">Sign Up</a>
+                    <a class="btn btn-secondary" href="{% url 'auth_user_login' %}">Login</a>
+                {% endif %}
+                
+                <br>
+                <a class="btn btn-secondary" href="{% url 'bookmarks_index' %}">Return Home</a>
+            </div>
+        </div>
 
     {% endblock %}

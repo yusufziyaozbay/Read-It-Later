@@ -1,17 +1,113 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Read it later</title>
-</head>
-<body>
-    <h1>Read it later</h1>
-    {% if user.is_authenticated %}
-        <p>User: {{user.username}}</p>
-    {% endif %}
+{% extends 'bookmarks/base.html' %}
+
+    {% block title %}
+        Home
+    {% endblock %}
 
 
-    <button type="submit"><a href="{% url 'auth_index' %}">Authentication App -></a></button>
-</body>
-</html>
+    {% block content %}
+        <h1>Read it later</h1>
+
+
+        <button onclick="btn_new_bookmark()">+ Add</button>
+
+        {% if user.is_authenticated %}
+            <p>User: {{user.username}}</p>
+
+            <div class="bookmarks">
+                <!-- New bookmark form -->
+                <form action="{% url 'bookmarks_add' %}" method="post" id="form_new_link" name="form_new_link" style="display: none;">
+                    {% csrf_token %}
+
+                    <label for="title">Title: </label>
+                    <input type="text" id="title" name="title" required>
+                    
+                    <label for="url">Url: </label>
+                    <input type="url" id="url" name="url" required>
+
+                    <label for="description">Description: </label>
+                    <input type="text" id="description" name="description" required>
+
+                    <button type="submit">Save</button>
+                </form>
+
+                <!-- List bookmarks -->
+                {% for bookmark in bookmarks %}
+                    <div class="bookmark_item">
+                        <a href="{{bookmark.url}}" target="_blank">{{bookmark.title}}</a>
+
+                        <!-- Open edit panel -->
+                        <button onclick="edit_bookmark('{{bookmark.id}}')">Edit</button>
+
+                        <!-- Edit panel -->
+                        <!-- <div id="modal_edit_{{forloop.counter}}" class="modal"> -->
+                        <div id="modal_edit_{{bookmark.id}}" class="modal">
+                            <div class="modal-content">
+                                <!-- Edit form -->
+                                <form action="{% url 'bookmarks_edit' bookmark.id %}" method="post">
+                                    {% csrf_token %}
+                                    <span onclick="span_close('{{bookmark.id}}')" id="span_close" class="close">&times;</span>
+                                    <input style="width: 80%; height: 2rem; font-size: large; font-weight: bold;" type="text" name="edit_title" id="edit_title" value="{{bookmark.title}}" required>
+                                    <div>
+                                        <textarea style="max-width: 80%; min-width: 80%; font-size: large;" name="edit_description" id="edit_description" cols="30" rows="10" required>{{bookmark.description}}</textarea>
+                                    </div>
+                                    <div>
+                                        <input style="width: 80%; font-size: large;" type="text" name="edit_url" id="edit_url" value="{{bookmark.url}}" required>
+                                    </div>
+                                    <button style="font-size: larger;" type="submit">Save</button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- Delete bookmark-->
+                        <button>Delete</button>
+
+                        <br>
+                        <span>{{bookmark.description}}</span>
+                    </div>
+                {% endfor %}
+
+            </div>
+        
+        {% endif %}
+
+        <button><a href="{% url 'auth_index' %}">Authentication App -></a></button>
+
+
+        <script>
+            // Show/Hide new link panel
+            function btn_new_bookmark(){
+                var form_new_link = document.getElementById("form_new_link");
+                if (form_new_link.style.display === "none"){
+                    form_new_link.style.display = "block";
+                } 
+                else{
+                    form_new_link.style.display = "none";
+                }
+            }
+
+
+            // Open edit panel
+            function edit_bookmark(id){
+                // Show panel                
+                modal = document.getElementById("modal_edit_" + id);
+                // console.log("The modal: ", modal);                
+                modal.style.display = "block";
+            }
+
+
+            // Close edit panel
+            function span_close(id){
+                // modal = document.getElementById("modal_edit_" + id);
+                modal.style.display = "none";
+            }
+
+            
+            // If user click the window, close the modal
+            window.onclick = function(event){
+                if (event.target == modal){
+                    modal.style.display = "none";
+                }
+            }
+        </script>
+    {% endblock %}

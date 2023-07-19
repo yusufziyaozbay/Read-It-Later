@@ -92,7 +92,7 @@ def user_login(request):
         if user is not None:
             login(request, user)
             #return render(request, 'authentication/index.html', {'user': user})
-            return redirect('/', {'user': user})
+            return redirect('/home', {'user': user})
         
         else:
             messages.error(request, 'Invalid Credentials')
