@@ -96,11 +96,10 @@ def user_login(request):
         
         else:
             messages.error(request, 'Invalid Credentials')
-            #return redirect('/login')
-            return render(request, 'authentication/user_login.html')
+            return redirect('authentication:index')
     
     else:
-        return render(request, 'authentication/user_login.html')
+        return redirect('authentication:index')
 
 
 def user_logout(request):

@@ -1,24 +1,14 @@
 body{
     margin: 0px;
-    background-color: teal;
+    padding-top: 2rem;
+    background-color: lightslategray;
 }
 
-.container{
+#container_main{
     margin-top: 3rem;
     margin-bottom: 3rem;
-    margin-left: 10rem;
-    margin-right: 10rem;
 }
-
-.bookmarks{
-    background-color: darkgrey;
-}
-
-.bookmark_item{
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-
+/* 
 .modal{
     display: none;
     position: fixed;
@@ -38,7 +28,7 @@ body{
     padding: 20px;
     border: 1px solid #888;
     width: 80%;
-}
+} */
 
 .close{
     color: #aaa;
@@ -53,3 +43,9 @@ body{
     text-decoration: none;
     cursor: pointer;
 }
+
+.btn_edit, .btn_delete{
+    display: none;
+}
+
+.list-group-item, .list-group-item:hover{ z-index: auto; }

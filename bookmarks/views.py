@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect #, get_object_or_404
 
 from .models import *
 # import django users:
@@ -11,7 +11,7 @@ def index(request):
     try:
         bookmarks = Bookmarks.objects.filter(user=request.user)
     except:
-        return redirect('auth_user_login')
+        return redirect('auth_index')
     
     return render(request, 'bookmarks/index.html', {"bookmarks":bookmarks})
 
@@ -41,4 +41,11 @@ def edit(request, id):
         bookmark.save()
         return redirect('/home')
     
+    return redirect('/home')
+
+
+def delete(request, id):
+    if request.method == "POST":
+        bookmark = Bookmarks.objects.get(id=id)
+        bookmark.delete()
     return redirect('/home')

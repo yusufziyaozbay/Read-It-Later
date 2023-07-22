@@ -1,37 +1,64 @@
 {% extends "authentication/base.html" %}
 
-    {% block title %}
-        Index
-    {% endblock %}
+{% block title %}
+    Login
+{% endblock %}
 
 
-    {% block content %}
+{% block content %}
 
-        <div class="card">
+    <div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+        <div class="card" style="width: 35%;  min-width: 500px;">
+
+            <div class="card-header">
+                <h2 class="card-title text-center">Login</h2>
+            </div>
+            
             <div class="card-body">
-
                 <!-- If user logged in -->
                 {% if user.is_authenticated %}
-                    <h2 class="card-title">Welcome {{user.first_name}} {{user.last_name}}!</h2>
+                    <p>Welcome {{user.first_name}} {{user.last_name}}!</p>
+
                     <!-- If there is a message -->
                     {% for message in messages %}
                         <p class="card-text">{{message}}</p>
                     {% endfor %}
-                    <button class="btn" type="submit"><a href="{% url 'auth_user_logout' %}">Sign Out</a></button>
+                
+                    <div class="text-center">
+                        <a class="btn btn-secondary" href="{% url 'authentication:user_logout' %}">Sign Out</a>
+                    </div>
                 
                 {% else %}
-                    <h2 class="card-title">Index:</h2>
-                    <!-- If there is a message -->
-                    {% for message in messages %}
-                        <p class="card-text">{{message}}</p>
-                    {% endfor %}
-                    <a class="btn btn-primary" href="{% url 'auth_user_signup' %}">Sign Up</a>
-                    <a class="btn btn-secondary" href="{% url 'auth_user_login' %}">Login</a>
-                {% endif %}
-                
-                <br>
-                <a class="btn btn-secondary" href="{% url 'bookmarks_index' %}">Return Home</a>
+                    <!-- Login form -->
+                    <form action="{% url 'authentication:user_login' %}" method="post">
+                        {% csrf_token %}
+                    
+                        <!-- If there is message -->
+                        {% for message in messages %}
+                            <p>{{message}}</p>
+                        {% endfor %}
+                    
+                        <input type="text" name="username" placeholder="Username" autocomplete="off" autofocus="on" required>
+                        <input type="password" name="password" placeholder="Password" required>
+                        <button class="btn btn-primary" type="submit">Login</button>
+                                                    
+                        
             </div>
+
+            <div class="card-footer">
+                        <div class="text-center">
+                            <a class="mb-3" href="{% url 'authentication:user_signup' %}">Don't have a account? Sign up here.</a>
+                        </div>
+                    </form>
+                {% endif %}
+                    
+                <div class="text-center">
+                    <a class="m-3 btn btn-secondary" href="{% url 'bookmarks:index' %}">Return Home</a>
+                </div>
+            </div>
+
+
         </div>
 
-    {% endblock %}
+    </div>
+{% endblock %}

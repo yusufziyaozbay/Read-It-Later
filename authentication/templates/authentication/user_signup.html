@@ -4,43 +4,61 @@
 
 
 {% block content %}
-    <h1>Sign Up</h1>
+    <div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+        <div class="card" style="width: 35%;  min-width: 400px;">
+            <div class="card-header">
+                <h2 class="card-title text-center">Sign Up</h2>
+            </div>
 
-    <form action="{% url 'auth_user_signup' %}" method="post">
-        <!-- If there is a message -->
-        {% for message in messages %}
-            <p>{{message}}</p>
-        {% endfor %}
+            <div class="card-body">
+                <form action="{% url 'authentication:user_signup' %}" method="post">
+                    {% csrf_token %}
 
-        {% csrf_token %}
+                    <!-- If there is a message -->
+                    {% for message in messages %}
+                        <p>{{message}}</p>
+                    {% endfor %}
+                        
+                    <div class="mb-3">
+                        <label class="form-label" for="username">User Name:</label>
+                        <input class="form-control" type="text" name="username" id="username" autocomplete="off" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label" for="fname">First Name:</label>
+                        <input class="form-control" type="text" name="fname" id="fname" autocomplete="off" required>
+                    </div>
 
-        <label for="username">User Name: </label>
-        <input type="text" name="username" id="username" placeholder="User name" autocomplete="off" required>
-        <br>
-        
-        <label for="fname">First Name: </label>
-        <input type="text" name="fname" id="fname" placeholder="First name" autocomplete="off" required>
-        <br>
+                    <div class="mb-3">
+                        <label class="form-label" for="lname">Last Name:</label>
+                        <input class="form-control" type="text" name="lname" id="lname" autocomplete="off" required>
+                    </div>
 
-        <label for="lname">Last Name: </label>
-        <input type="text" name="lname" id="lname" placeholder="Last name" autocomplete="off" required>
-        <br>
+                    <div class="mb-3">
+                        <label class="form-label" for="email">Email:</label>
+                        <input class="form-control" type="email" name="email" id="email" autocomplete="off" required>
+                    </div>
 
-        <label for="email">Email: </label>
-        <input type="email" name="email" id="email" placeholder="Email" autocomplete="off" required>
-        <br>
+                    <div class="mb-3">
+                        <label class="form-label" for="password1">Password:</label>
+                        <input class="form-control" type="password" name="password1" id="password1" autocomplete="off" required>
+                    </div>
 
-        <label for="password1">Password: </label>
-        <input type="password" name="password1" id="password1" placeholder="Password" autocomplete="off" required>
-        <br>
+                    <div class="mb-3">
+                        <label class="form-label" for="password2">Password Again:</label>
+                        <input class="form-control" type="password" name="password2" id="password2" autocomplete="off" required>
+                    </div>
 
-        <label for="password2">Password Again: </label>
-        <input type="password" name="password2" id="password2" placeholder="Confirm" autocomplete="off" required>
-        <br>
+                    <div class="text-center">
+                        <button class="btn btn-primary" type="submit">Sign Up</button>
+                    </div>
+                </form>
+            </div>
 
-        <button type="submit">Sign Up</button>
-    </form>
-
-    <button><a href="/">Return index</a></button>
+            <div class="card-footer text-center">
+                <a  href="{% url 'authentication:index' %}">Already have a account? Login here.</a>
+            </div>
+        </div>
+    </div>
     
 {% endblock %}
