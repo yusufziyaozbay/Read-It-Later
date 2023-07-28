@@ -9,3 +9,6 @@ venv/
 
 # Txt file
 app_design.txt
+
+# Sqlite database
+db.sqlite3
