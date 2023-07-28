@@ -48,4 +48,15 @@ body{
     display: none;
 }
 
-.list-group-item, .list-group-item:hover{ z-index: auto; }
+.list-group-item, .list-group-item:hover{
+    z-index: auto; 
+}
+
+.h4_bookmark_title{
+    display: inline-block;
+}
+
+.img-small{
+    max-width: 100px;
+    max-height: 100px;
+}
