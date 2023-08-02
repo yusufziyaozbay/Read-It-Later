@@ -15,48 +15,48 @@
     <div class="list-group">
         <!-- Show message if no record -->
         {% if not bookmarks %}
-            <p class="text-center fs-3">There are no records yet :/</p>
+        <p class="text-center fs-3">There are no records yet :/</p>
         {% endif %}
 
         <!-- List bookmarks -->
-        {% for bookmark in bookmarks %}        
+        {% for bookmark in bookmarks %}
         <div class="list-group-item list-group-item-action list-group-item-light border p-3"
-        onmouseenter="show_buttons('{{bookmark.id}}')" onmouseleave="hide_buttons('{{bookmark.id}}')"
-        onclick="open_link('{{bookmark.url}}'); form_readed('{{bookmark.id}}');" id="div_bookmark_{{bookmark.id}}" style="cursor: pointer;">
-        
-            <form action="{% url 'bookmarks:autoread' bookmark.id %}" method="post" id="form_readed_{{bookmark.id}}" name="form_readed_{{bookmark.id}}">
+            onmouseenter="show_buttons('{{bookmark.id}}')" onmouseleave="hide_buttons('{{bookmark.id}}')"
+            onclick="open_link('{{bookmark.url}}'); form_readed('{{bookmark.id}}');" id="div_bookmark_{{bookmark.id}}"
+            style="cursor: pointer;">
+
+            <form action="{% url 'bookmarks:autoread' bookmark.id %}" method="post" id="form_readed_{{bookmark.id}}"
+                name="form_readed_{{bookmark.id}}">
                 {% csrf_token %}
             </form>
 
             <!-- Image for large view -->
-            <img src="{{bookmark.image}}" class="bookmark_image_large rounded-top mb-1" alt="Image preview" style="display: none;">
+            <img src="{{bookmark.image}}" class="bookmark_image_large rounded-top mb-1" alt="Image preview"
+                style="display: none;">
 
             <!-- Bookmark tittle and buttons -->
-            <!-- <div class="d-flex w-100 justify-content-between"> -->
-                <!-- Small view -->
-                <div class="div_small_heading d-flex w-100">
-                    <div class="col">
-                        <!-- Image for small view -->
-                        <img src="{{bookmark.image}}" class="bookmark_image_small rounded-3 mb-1"
-                        alt="Image preview">
-                    </div>
-                    <div class="col-9">
-                        <h4 class="h4_bookmark_title mx-2 mb-0">{{bookmark.title}}</h4>
-                    </div>
-                    <div class="col">
-                        <small class="text-body-secondary float-end">{{bookmark.created_at}}</small>
-                    </div>
-                </div>
+            <!-- Small view -->
+            <div class="div_small_heading d-flex justify-content-between w-100">
+                <div class="d-flex">
+                    <!-- Image for small view -->
+                    <img src="{{bookmark.image}}" class="bookmark_image_small rounded-3 mb-1" alt="Image preview">
 
-                <!-- Large view -->
-                <div class="div_large_heading d-flex w-100">
-                    <div class="col-9">
-                        <h4 class="h4_bookmark_title mx-2 mb-0">{{bookmark.title}}</h4>
-                    </div>
-                    <div class="col">
-                        <small class="text-body-secondary float-end">{{bookmark.created_at}}</small>
-                    </div>
+                    <h4 class="h4_bookmark_title mx-2 mb-0">{{bookmark.title}}</h4>
                 </div>
+                <div>
+                    <small class="text-body-secondary float-end">{{bookmark.created_at}}</small>
+                </div>
+            </div>
+
+            <!-- Large view -->
+            <div class="div_large_heading d-flex w-100">
+                <div class="col-9">
+                    <h4 class="h4_bookmark_title mx-2 mb-0">{{bookmark.title}}</h4>
+                </div>
+                <div class="col">
+                    <small class="text-body-secondary float-end">{{bookmark.created_at}}</small>
+                </div>
+            </div>
 
 
             <!-- Bookmark description -->
@@ -65,29 +65,34 @@
             <!-- URL -->
             <small class="fw-lighter">{{bookmark.url}}</small>
 
-            <!-- Buttons -->
-            <div>
+            <!-- Buttons for computers -->
+            <div class="buttons_computer">
                 <!-- Link tags -->
                 <div class="float-start">
                     <!-- Button: archive -->
                     <form action="{% url 'bookmarks:btnarchive' bookmark.id %}" method="post" class="form_inline">
                         {% csrf_token %}
-                        <button class="btn_hide btn py-0 {% if bookmark.archived == True %}btn-info{% else %}btn-outline-info{% endif %}" id="btn_archive_{{bookmark.id}}" type="submit" 
+                        <button
+                            class="btn_hide btn py-0 {% if bookmark.archived == True %}btn-info{% else %}btn-outline-info{% endif %}"
+                            id="btn_archive_{{bookmark.id}}" type="submit"
                             onclick="handle_click(event)">Archived</button>
                     </form>
-                    
+
                     <!-- Button: favorite -->
                     <form action="{% url 'bookmarks:btnfavorite' bookmark.id %}" method="post" class="form_inline">
                         {% csrf_token %}
-                        <button class="btn_hide btn py-0 {% if bookmark.favorited == True %}btn-warning{% else %}btn-outline-warning{% endif %}" id="btn_favorite_{{bookmark.id}}" type="submit" 
-                        onclick="handle_click(event)">Favorite</button>
+                        <button
+                            class="btn_hide btn py-0 {% if bookmark.favorited == True %}btn-warning{% else %}btn-outline-warning{% endif %}"
+                            id="btn_favorite_{{bookmark.id}}" type="submit"
+                            onclick="handle_click(event)">Favorite</button>
                     </form>
-                    
+
                     <!-- Button: read -->
                     <form action="{% url 'bookmarks:btnread' bookmark.id %}" method="post" class="form_inline">
                         {% csrf_token %}
-                        <button class="btn_hide btn py-0 {% if bookmark.readed == True %}btn-success{% else %}btn-outline-success{% endif %}" id="btn_read_{{bookmark.id}}" type="submit" 
-                            onclick="handle_click(event)">Readed</button>
+                        <button
+                            class="btn_hide btn py-0 {% if bookmark.readed == True %}btn-success{% else %}btn-outline-success{% endif %}"
+                            id="btn_read_{{bookmark.id}}" type="submit" onclick="handle_click(event)">Readed</button>
                     </form>
                 </div>
 
@@ -97,14 +102,74 @@
                     <button class="btn_hide btn btn-secondary py-0" id="btn_edit_{{bookmark.id}}" type="button"
                         data-bs-toggle="modal" data-bs-target="#modal_edit_bookmark_{{bookmark.id}}"
                         onclick="handle_click(event)">Edit</button>
-    
+
                     <!-- Button: delete bookmark-->
                     <button class="btn_hide btn btn-danger py-0" id="btn_delete_{{bookmark.id}}" type="button"
                         data-bs-toggle="modal" data-bs-target="#modal_delete_bookmark_{{bookmark.id}}"
                         onclick="handle_click(event)">Delete</button>
                 </div>
             </div>
-        
+
+            <!-- Buttons mobile -->
+            <div class="buttons_mobile">
+                <!-- Link tags -->
+                <div class="dropup float-end">
+                    <button class="btn btn-dark dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false" onclick="handle_click(event)">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <!-- Button: archive -->
+                            <form action="{% url 'bookmarks:btnarchive' bookmark.id %}" method="post" class="">
+                                {% csrf_token %}
+                                <button
+                                    class="dropdown-item {% if bookmark.archived == True %}bg-info{% endif %}"
+                                    id="btn_archive_{{bookmark.id}}" type="submit"
+                                    onclick="handle_click(event)">Archived</button>
+                            </form>
+                        </li>
+                        <li>
+                            <!-- Button: favorite -->
+                            <form action="{% url 'bookmarks:btnfavorite' bookmark.id %}" method="post" class="form_inline">
+                                {% csrf_token %}
+                                <button
+                                    class="dropdown-item {% if bookmark.favorited == True %}bg-warning{% endif %}"
+                                    id="btn_favorite_{{bookmark.id}}" type="submit"
+                                    onclick="handle_click(event)">Favorite</button>
+                            </form>
+                        </li>
+                        <li>
+                            <!-- Button: read -->
+                            <form action="{% url 'bookmarks:btnread' bookmark.id %}" method="post" class="form_inline">
+                                {% csrf_token %}
+                                <button
+                                    class="dropdown-item {% if bookmark.readed == True %}bg-success{% endif %}"
+                                    id="btn_read_{{bookmark.id}}" type="submit" onclick="handle_click(event)">Readed</button>
+                            </form>
+                        </li>
+
+                            <hr>
+
+                        <li>
+                            <!-- Button: edit bookmark -->
+                            <button class="dropdown-item" id="btn_edit_{{bookmark.id}}" type="button"
+                                data-bs-toggle="modal" data-bs-target="#modal_edit_bookmark_{{bookmark.id}}"
+                                onclick="handle_click(event)">Edit</button>
+                        </li>
+                        <li>
+                            <!-- Button: delete bookmark-->
+                            <button class="dropdown-item" id="btn_delete_{{bookmark.id}}" type="button"
+                                data-bs-toggle="modal" data-bs-target="#modal_delete_bookmark_{{bookmark.id}}"
+                                onclick="handle_click(event)">Delete</button>
+                        </li>
+                    </ul>
+
+    
+                </div>
+            </div>
+
+
+
 
         </div>
 

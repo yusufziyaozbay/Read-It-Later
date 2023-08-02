@@ -7,7 +7,6 @@ from django.contrib.auth.models import User
 # For link previews:
 import requests
 from bs4 import BeautifulSoup
-import re
 
 
 # Create your views here.
@@ -17,9 +16,6 @@ def index(request):
         bookmarks = Bookmarks.objects.filter(user=request.user, readed=False)
     except:
         return redirect('/')
-    
-    # if not bookmarks:
-    #     messages.info(request, 'There are no records yet :/')
 
     tags_count = bookmarks_tags_count(request)
     
@@ -84,7 +80,6 @@ def get_og_data(url):
         'title': get_og_meta(soup, 'og:title'),
         'description': get_og_meta(soup, 'og:description'),
         'image': get_og_meta(soup, 'og:image'),
-        # 'url': get_og_meta(soup, 'og:url'),
     }
     return og_data
 
@@ -115,9 +110,6 @@ def read(request):
         bookmarks = Bookmarks.objects.filter(user=request.user, readed=True)
     except:
         return redirect('/')
-    
-    # if not bookmarks:
-    #     messages.info(request, 'There are no read yet :/')
 
     tags_count = bookmarks_tags_count(request)
 
@@ -153,9 +145,6 @@ def archive(request):
     except:
         return redirect('/')
     
-    # if not bookmarks:
-    #     messages.info(request, 'There are no archive yet :/')
-    
     tags_count = bookmarks_tags_count(request)
 
     context = {
@@ -189,9 +178,6 @@ def favorite(request):
         bookmarks = Bookmarks.objects.filter(user=request.user, favorited=True)
     except:
         return redirect('/')
-    
-    # if not bookmarks:
-    #     messages.info(request, 'There are no favorite yet :/')
     
     tags_count = bookmarks_tags_count(request)
 
@@ -242,7 +228,6 @@ def bookmarks_tags_count(request):
 def search(request):
     if request.method == 'POST':
         search_text = request.POST['search_text']
-        # bookmarks = Bookmarks.objects.filter(user=request.user, title=search_text)
         bookmarks = Bookmarks.objects.filter(user=request.user, title__icontains=search_text)
         tags_count = bookmarks_tags_count(request)
 
