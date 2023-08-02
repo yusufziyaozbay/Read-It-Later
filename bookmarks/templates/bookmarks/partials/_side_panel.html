@@ -1,0 +1,14 @@
+<div class="card ms-auto me-0" style="width: 18rem; position: sticky; top: 5rem;">
+    <div class="card-header">
+        <h5 class="card-title text-center my-2">Pages</h5>
+    </div>
+    <div class="card-body">
+        <a class="btn d-block {% if current_page == 'index' %}active{% endif %}" href="{% url 'bookmarks:index' %}" id="btn_saves">Saves <span class="badge text-bg-primary">{{tags_count.bookmarks_saves}}</span></a>
+        <a class="btn d-block {% if current_page == 'archive' %}active{% endif %}" href="{% url 'bookmarks:archive' %}" id="btn_archive">Archived <span class="badge text-bg-primary">{{tags_count.bookmarks_archived}}</span></a>
+        <a class="btn d-block {% if current_page == 'favorite' %}active{% endif %}" href="{% url 'bookmarks:favorite' %}" id="btn_archive">Favorites <span class="badge text-bg-primary">{{tags_count.bookmarks_favorited}}</span></a>
+        
+        <hr>
+        
+        <a class="btn d-block {% if current_page == 'read' %}active{% endif %}" href="{% url 'bookmarks:read' %}" id="btn_archive">Readed <span class="badge text-bg-primary">{{tags_count.bookmarks_readed}}</span></a>
+    </div>
+</div>

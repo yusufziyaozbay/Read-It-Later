@@ -29,7 +29,7 @@ def user_signup(request):
         # If passwords don't match
         if password1 != password2:
             messages.error(request, 'Passwords do not match.')
-            return redirect('auth_user_signup')
+            return redirect('/signup/')
         
         # If username is not alpha numeric
         if not username.isalnum():
@@ -39,12 +39,12 @@ def user_signup(request):
         # If username already exists
         if User.objects.filter(username=username).exists():
             messages.error(request, 'Username already exists.')
-            return redirect('/signup')
+            return redirect('/signup/')
         
         # If mail already exists
         if User.objects.filter(email=email).exists():
             messages.error(request, 'Email already exists.')
-            return redirect('/signup')
+            return redirect('/signup/')
 
         # Create user
         myuser = User.objects.create_user(username, email, password1)
@@ -78,7 +78,7 @@ def user_signup(request):
         )
         email.fail_silently = True
         email.send()
-        return redirect('/login')
+        return redirect('/login/')
     
     else:
         return render(request, 'authentication/user_signup.html')
@@ -92,14 +92,14 @@ def user_login(request):
         if user is not None:
             login(request, user)
             #return render(request, 'authentication/index.html', {'user': user})
-            return redirect('/home', {'user': user})
+            return redirect('/home/', {'user': user})
         
         else:
             messages.error(request, 'Invalid Credentials')
-            return redirect('authentication:index')
+            return redirect('/')
     
     else:
-        return redirect('authentication:index')
+        return redirect('/')
 
 
 def user_logout(request):

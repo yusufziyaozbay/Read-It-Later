@@ -1,0 +1,194 @@
+<div class="card-body">
+    <!-- Add bookmark form -->
+    <form action="{% url 'bookmarks:add' %}" method="post" id="form_new_link" name="form_new_link"
+        style="display: none;">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label class="form-label" for="url">Url: </label>
+            <input class="form-control" type="url" id="url" name="url" autocomplete="off" required>
+        </div>
+
+        <button class="btn btn-primary" type="submit">Save</button>
+        <hr>
+    </form>
+
+    <div class="list-group">
+        <!-- Show message if no record -->
+        {% if not bookmarks %}
+            <p class="text-center fs-3">There are no records yet :/</p>
+        {% endif %}
+
+        <!-- List bookmarks -->
+        {% for bookmark in bookmarks %}        
+        <div class="list-group-item list-group-item-action list-group-item-light border p-3"
+        onmouseenter="show_buttons('{{bookmark.id}}')" onmouseleave="hide_buttons('{{bookmark.id}}')"
+        onclick="open_link('{{bookmark.url}}'); form_readed('{{bookmark.id}}');" id="div_bookmark_{{bookmark.id}}" style="cursor: pointer;">
+        
+            <form action="{% url 'bookmarks:autoread' bookmark.id %}" method="post" id="form_readed_{{bookmark.id}}" name="form_readed_{{bookmark.id}}">
+                {% csrf_token %}
+            </form>
+
+            <!-- Image for large view -->
+            <img src="{{bookmark.image}}" class="bookmark_image_large rounded-top mb-1" alt="Image preview" style="display: none;">
+
+            <!-- Bookmark tittle and buttons -->
+            <!-- <div class="d-flex w-100 justify-content-between"> -->
+                <!-- Small view -->
+                <div class="div_small_heading d-flex w-100">
+                    <div class="col">
+                        <!-- Image for small view -->
+                        <img src="{{bookmark.image}}" class="bookmark_image_small rounded-3 mb-1"
+                        alt="Image preview">
+                    </div>
+                    <div class="col-9">
+                        <h4 class="h4_bookmark_title mx-2 mb-0">{{bookmark.title}}</h4>
+                    </div>
+                    <div class="col">
+                        <small class="text-body-secondary float-end">{{bookmark.created_at}}</small>
+                    </div>
+                </div>
+
+                <!-- Large view -->
+                <div class="div_large_heading d-flex w-100">
+                    <div class="col-9">
+                        <h4 class="h4_bookmark_title mx-2 mb-0">{{bookmark.title}}</h4>
+                    </div>
+                    <div class="col">
+                        <small class="text-body-secondary float-end">{{bookmark.created_at}}</small>
+                    </div>
+                </div>
+
+
+            <!-- Bookmark description -->
+            <p class="mb-1">{{bookmark.description}}</p>
+
+            <!-- URL -->
+            <small class="fw-lighter">{{bookmark.url}}</small>
+
+            <!-- Buttons -->
+            <div>
+                <!-- Link tags -->
+                <div class="float-start">
+                    <!-- Button: archive -->
+                    <form action="{% url 'bookmarks:btnarchive' bookmark.id %}" method="post" class="form_inline">
+                        {% csrf_token %}
+                        <button class="btn_hide btn py-0 {% if bookmark.archived == True %}btn-info{% else %}btn-outline-info{% endif %}" id="btn_archive_{{bookmark.id}}" type="submit" 
+                            onclick="handle_click(event)">Archived</button>
+                    </form>
+                    
+                    <!-- Button: favorite -->
+                    <form action="{% url 'bookmarks:btnfavorite' bookmark.id %}" method="post" class="form_inline">
+                        {% csrf_token %}
+                        <button class="btn_hide btn py-0 {% if bookmark.favorited == True %}btn-warning{% else %}btn-outline-warning{% endif %}" id="btn_favorite_{{bookmark.id}}" type="submit" 
+                        onclick="handle_click(event)">Favorite</button>
+                    </form>
+                    
+                    <!-- Button: read -->
+                    <form action="{% url 'bookmarks:btnread' bookmark.id %}" method="post" class="form_inline">
+                        {% csrf_token %}
+                        <button class="btn_hide btn py-0 {% if bookmark.readed == True %}btn-success{% else %}btn-outline-success{% endif %}" id="btn_read_{{bookmark.id}}" type="submit" 
+                            onclick="handle_click(event)">Readed</button>
+                    </form>
+                </div>
+
+                <!-- Link operations -->
+                <div class="float-end">
+                    <!-- Button: edit bookmark -->
+                    <button class="btn_hide btn btn-secondary py-0" id="btn_edit_{{bookmark.id}}" type="button"
+                        data-bs-toggle="modal" data-bs-target="#modal_edit_bookmark_{{bookmark.id}}"
+                        onclick="handle_click(event)">Edit</button>
+    
+                    <!-- Button: delete bookmark-->
+                    <button class="btn_hide btn btn-danger py-0" id="btn_delete_{{bookmark.id}}" type="button"
+                        data-bs-toggle="modal" data-bs-target="#modal_delete_bookmark_{{bookmark.id}}"
+                        onclick="handle_click(event)">Delete</button>
+                </div>
+            </div>
+        
+
+        </div>
+
+
+        <!-- Modal edit -->
+        <div class="modal fade" id="modal_edit_bookmark_{{bookmark.id}}" tabindex="-1"
+            aria-labelledby="modal_edit_bookmark_label_{{bookmark.id}}" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <!-- Modal header -->
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="modal_edit_bookmark_label_{{bookmark.id}}">Edit Bookmark</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <form action="{% url 'bookmarks:edit' bookmark.id %}" method="post">
+                            {% csrf_token %}
+
+                            <div class="mb-3">
+                                <label class="form-label" for="edit_title_{{bookmark.id}}">Title</label>
+                                <input class="form-control" type="text" id="edit_title_{{bookmark.id}}"
+                                    name="edit_title" placeholder="Title" value="{{bookmark.title}}" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label" for="edit_description_{{bookmark.id}}">Description</label>
+                                <textarea class="form-control" id="edit_description_{{bookmark.id}}"
+                                    name="edit_description" placeholder="Description" cols="30" rows="10"
+                                    required>{{bookmark.description}}</textarea>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label" for="edit_url_{{bookmark.id}}">Url</label>
+                                <input class="form-control" type="text" id="edit_url_{{bookmark.id}}" name="edit_url"
+                                    placeholder="Url" value="{{bookmark.url}}" required>
+                            </div>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
+                        <button class="btn btn-primary" type="submit">Save</button>
+                        </form>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal delete -->
+        <div class="modal fade" id="modal_delete_bookmark_{{bookmark.id}}" tabindex="-1"
+            aria-labelledby="modal_delete_bookmark_label_{{bookmark.id}}" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <!-- Modal header -->
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="modal_delete_bookmark_label_{{bookmark.id}}">Delete the
+                            bookmark?</h1>
+                        <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        "{{bookmark.title}}"
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
+                        <form action="{% url 'bookmarks:delete' bookmark.id %}" method="post">
+                            {% csrf_token %}
+                            <button class="btn btn-danger" type="submit">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% endfor %}
+
+
+
+    </div>
+</div>

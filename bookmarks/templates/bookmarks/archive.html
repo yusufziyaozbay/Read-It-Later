@@ -1,7 +1,7 @@
 {% extends 'bookmarks/base.html' %}
 
 {% block title %}
-    Home
+    Archive
 {% endblock %}
 
 
@@ -14,8 +14,6 @@
         <div class="col-8">      
             <div class="card mb-3 bg-body border border-secondary-subtle shadow ms-0 me-auto" style="min-width: 700px; max-width: 1000px;">
                 <div class="card-header">
-                    {% include 'bookmarks/partials/_card_btn_add.html'%}
-
                     {% include 'bookmarks/partials/_card_btn_view.html' %}
                 </div>
 
@@ -23,8 +21,7 @@
             </div>
     
             <a class="btn btn-secondary" href="{% url 'authentication:index' %}">Authentication App -></a>
-                        
+
         </div>
     </div>
-
 {% endblock %}
