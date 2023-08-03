@@ -10,6 +10,7 @@ from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from . tokens import generate_token
+from bookmarks.models import *
 
 
 # Create your views here.
@@ -125,3 +126,52 @@ def activate(request, uidb64, token):
     else:
         return render(request, 'activation_failed.html')
 
+
+def change_password(request):
+    if request.method == 'POST':
+        username = request.user.username
+        current_password = request.POST['current_password']
+        new_password = request.POST['new_password']
+        new_password_again = request.POST['new_password_again']
+
+        # If new passwords do not match
+        if new_password != new_password_again:
+            messages.error(request, 'Passwords do not match.')
+            return redirect('/home/')
+        
+        # Check current password
+        user = authenticate(username=username, password=current_password)
+        if user is not None:
+            # Update password
+            u = User.objects.get(username=username)
+            u.set_password(new_password)
+            u.save()
+            messages.success(request, 'Your password has been successfully updated.')
+            return redirect('/login/')
+
+        else:
+            messages.error(request, 'Password is not correct.')
+            return redirect('/home/')
+        
+    else:
+        return redirect('/home/')
+
+
+def delete_account(request):
+    if request.method == 'POST':
+        user = request.user
+
+        # Delete bookmarks
+        bookmarks = Bookmarks.objects.get(user_id=user.id)
+        bookmarks.delete()
+
+        # Deactivate account
+        user.is_active = False
+        user.save()
+
+        messages.success(request, 'Your account has been successfully deleted.')
+        return redirect('/login/')
+        
+    else:
+        messages.error(request, 'An error has occurred.')
+        return redirect('/home/')

@@ -1,4 +1,4 @@
-<div class="card-body">
+<div class="card-body" style="background: linear-gradient(180deg, rgba(250,192,115,0.4990371148459384) 0%, rgba(255,150,38,0.5046393557422969) 100%);">
     <!-- Add bookmark form -->
     <form action="{% url 'bookmarks:add' %}" method="post" id="form_new_link" name="form_new_link"
         style="display: none;">
@@ -20,10 +20,10 @@
 
         <!-- List bookmarks -->
         {% for bookmark in bookmarks %}
-        <div class="list-group-item list-group-item-action list-group-item-light border p-3"
+        <div class="list-group-item list-group-item-action list-group-item-light border border-dark p-3"
             onmouseenter="show_buttons('{{bookmark.id}}')" onmouseleave="hide_buttons('{{bookmark.id}}')"
             onclick="open_link('{{bookmark.url}}'); form_readed('{{bookmark.id}}');" id="div_bookmark_{{bookmark.id}}"
-            style="cursor: pointer;">
+            style="cursor: pointer; background-color: rgb(247, 232, 215);">
 
             <form action="{% url 'bookmarks:autoread' bookmark.id %}" method="post" id="form_readed_{{bookmark.id}}"
                 name="form_readed_{{bookmark.id}}">
@@ -114,7 +114,7 @@
             <div class="buttons_mobile">
                 <!-- Link tags -->
                 <div class="dropup float-end">
-                    <button class="btn btn-dark dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false" onclick="handle_click(event)">
+                    <button class="btn dropdown-toggle border border-dark" type="button" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false" onclick="handle_click(event)">
                         <i class="fa-solid fa-bars"></i>
                     </button>
                     <ul class="dropdown-menu">
@@ -124,7 +124,7 @@
                                 {% csrf_token %}
                                 <button
                                     class="dropdown-item {% if bookmark.archived == True %}bg-info{% endif %}"
-                                    id="btn_archive_{{bookmark.id}}" type="submit"
+                                    type="submit"
                                     onclick="handle_click(event)">Archived</button>
                             </form>
                         </li>
@@ -134,7 +134,7 @@
                                 {% csrf_token %}
                                 <button
                                     class="dropdown-item {% if bookmark.favorited == True %}bg-warning{% endif %}"
-                                    id="btn_favorite_{{bookmark.id}}" type="submit"
+                                    type="submit"
                                     onclick="handle_click(event)">Favorite</button>
                             </form>
                         </li>
@@ -144,7 +144,7 @@
                                 {% csrf_token %}
                                 <button
                                     class="dropdown-item {% if bookmark.readed == True %}bg-success{% endif %}"
-                                    id="btn_read_{{bookmark.id}}" type="submit" onclick="handle_click(event)">Readed</button>
+                                    type="submit" onclick="handle_click(event)">Readed</button>
                             </form>
                         </li>
 
@@ -152,13 +152,13 @@
 
                         <li>
                             <!-- Button: edit bookmark -->
-                            <button class="dropdown-item" id="btn_edit_{{bookmark.id}}" type="button"
+                            <button class="dropdown-item" type="button"
                                 data-bs-toggle="modal" data-bs-target="#modal_edit_bookmark_{{bookmark.id}}"
                                 onclick="handle_click(event)">Edit</button>
                         </li>
                         <li>
                             <!-- Button: delete bookmark-->
-                            <button class="dropdown-item" id="btn_delete_{{bookmark.id}}" type="button"
+                            <button class="dropdown-item" type="button"
                                 data-bs-toggle="modal" data-bs-target="#modal_delete_bookmark_{{bookmark.id}}"
                                 onclick="handle_click(event)">Delete</button>
                         </li>
@@ -180,7 +180,7 @@
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <!-- Modal header -->
-                    <div class="modal-header">
+                    <div class="modal-header" style="background: linear-gradient(180deg, rgba(250,192,115,1) 0%, rgba(255,150,38,1) 100%);">
                         <h1 class="modal-title fs-5" id="modal_edit_bookmark_label_{{bookmark.id}}">Edit Bookmark</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
@@ -228,7 +228,7 @@
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <!-- Modal header -->
-                    <div class="modal-header">
+                    <div class="modal-header" style="background: linear-gradient(180deg, rgba(250,192,115,1) 0%, rgba(255,150,38,1) 100%);">
                         <h1 class="modal-title fs-5" id="modal_delete_bookmark_label_{{bookmark.id}}">Delete the
                             bookmark?</h1>
                         <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>

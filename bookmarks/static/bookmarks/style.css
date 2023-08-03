@@ -1,7 +1,5 @@
 @media (hover: hover) {
-    body{
-        background-color: orange;
-    }
+
 
     .btn_hide{
         display: none;
@@ -18,10 +16,6 @@
 }
 
 @media (hover: none){
-    body{
-        background-color: blanchedalmond;
-    }
-
     .buttons_computer{
         display: none;
     }
@@ -34,11 +28,10 @@
 }
 
 
-
 body{
+    background-image: url('img/pattern2.webp');    
     margin: 0px;
     padding-top: 2rem;
-    /* background-color: lightslategray; */
 }
 
 #container_main{
@@ -59,7 +52,6 @@ body{
     text-decoration: none;
     cursor: pointer;
 }
-
 
 .form_inline{
     display: inline;

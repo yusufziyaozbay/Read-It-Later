@@ -20,7 +20,8 @@
 <body>
     <header>
         <!-- Navbar -->
-        <nav class="navbar navbar-expand-lg fixed-top bg-body-tertiary border border-secondary-subtle shadow">
+        <nav class="navbar navbar-expand-lg fixed-top border border-secondary-subtle shadow"
+            style="background: linear-gradient(180deg, rgba(237,227,240,1) 0%, rgba(220,208,233,1) 100%);">
             <div class="container-fluid">
                 <!-- Brand -->
                 <a class="navbar-brand" href="{% url 'bookmarks:index' %}">Read It Later</a>
@@ -48,26 +49,34 @@
                                         {% endif %}
                                     </h6>
                                 </li>
-                                <li><a class="dropdown-item" href="#">Dark mode</a></li>
-                                <li><a class="dropdown-item" href="#"><i class="fa-solid fa-gear"></i> Settings</a></li>
-                                <li><a class="dropdown-item" href="{% url 'authentication:user_logout' %}"><i class="fa-solid fa-right-from-bracket"></i> Log out</a></li>
+                                <!-- <li><a class="dropdown-item" href="#">Dark mode</a></li> -->
+                                <li>
+                                    <button type="button" class="dropdown-item" data-bs-toggle="modal"
+                                        data-bs-target="#modal_settings">
+                                        <i class="fa-solid fa-gear"></i> Settings
+                                    </button>
+                                </li>
+                                <li><a class="dropdown-item" href="{% url 'authentication:user_logout' %}"><i
+                                            class="fa-solid fa-right-from-bracket"></i> Log out</a></li>
                             </ul>
                         </li>
                     </div>
 
                     <!-- Search -->
-                    <form action="{% url 'bookmarks:search' %}" method="post" class="d-flex align-items-center me-0 ms-auto" role="search">
+                    <form action="{% url 'bookmarks:search' %}" method="post"
+                        class="d-flex align-items-center me-0 ms-auto" role="search">
                         {% csrf_token %}
                         {% if searched_text %}
-                            <!-- <button type="button" class="btn-close me-2" aria-label="Close"></button> -->
-                            <a href="{% url 'bookmarks:index' %}" type="button" class="btn-close me-2" aria-label="Close"></a>
+                        <!-- <button type="button" class="btn-close me-2" aria-label="Close"></button> -->
+                        <a href="{% url 'bookmarks:index' %}" type="button" class="btn-close me-2"
+                            aria-label="Close"></a>
                         {% endif %}
-                        <input class="form-control me-2" type="search" name="search_text" placeholder="Search" aria-label="Search" value="{% if searched_text %} {{searched_text}} {% endif %}">
-                        <button class="btn btn-outline-success" type="submit" style="min-width: 100px;"><i class="fa-solid fa-magnifying-glass"></i> Search</button>
+                        <input class="form-control me-2" type="search" name="search_text" placeholder="Search"
+                            aria-label="Search" value="{% if searched_text %} {{searched_text}} {% endif %}">
+                        <button class="btn btn-outline-success" type="submit" style="min-width: 100px;"><i
+                                class="fa-solid fa-magnifying-glass"></i> Search</button>
                     </form>
-
                 </div>
-
 
             </div>
         </nav>
@@ -86,7 +95,8 @@
         <div class="toast-container position-fixed bottom-0 end-0 p-3">
             <div id="live_toast_{{bookmark.id}}" class="toast fade show" role="alert" aria-live="assertive"
                 aria-atomic="true">
-                <div class="toast-header">
+                <div class="toast-header"
+                    style="background: linear-gradient(180deg, rgba(250,192,115,1) 0%, rgba(255,150,38,1) 100%);">
                     <strong class="me-auto">Read It Later</strong>
                     <small>now</small>
                     <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
@@ -99,7 +109,106 @@
             </div>
         </div>
         {% endif %}
+
     </body>
+
+    <!-- Modal settings -->
+    <div class="modal fade" id="modal_settings" tabindex="-1" aria-labelledby="modal_settings_label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header"
+                    style="background: linear-gradient(180deg, rgba(250,192,115,1) 0%, rgba(255,150,38,1) 100%);">
+                    <h1 class="modal-title fs-5" id="modal_settings_label">Account Settings</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#modal_change_password">
+                        <i class="fa-solid fa-key"></i> Change password
+                    </button>
+
+                    <hr>
+
+                    <h6 class="text-danger">Danger zone</h6>
+                    <p>We can't undo this action once the account is deleted.</p>
+                    <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#modal_delete_account">
+                        <i class="fa-solid fa-trash-can"></i> Delete account
+                    </button>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal change password -->
+    <div class="modal fade" id="modal_change_password" tabindex="-1" aria-labelledby="modal_change_password_label"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header"
+                    style="background: linear-gradient(180deg, rgba(250,192,115,1) 0%, rgba(255,150,38,1) 100%);">
+                    <h1 class="modal-title fs-5" id="modal_change_password_label">Change Password</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{% url 'authentication:change_password' %}" method="post">
+                        {% csrf_token %}
+
+                        <div class="mb-3">
+                            <label class="form-label" for="current_password">Current Password:</label>
+                            <input class="form-control" type="password" name="current_password" id="current_password"
+                                autocomplete="off" required autofocus="on">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label" for="new_password">New Password:</label>
+                            <input class="form-control" type="password" name="new_password" id="new_password"
+                                autocomplete="off" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label" for="new_password_again">New Password Again:</label>
+                            <input class="form-control" type="password" name="new_password_again"
+                                id="new_password_again" autocomplete="off" required>
+                        </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+                    </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal delete account -->
+    <div class="modal fade" id="modal_delete_account" tabindex="-1" aria-labelledby="modal_delete_account_label"
+    aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header"
+                    style="background: linear-gradient(180deg, rgba(250,192,115,1) 0%, rgba(255,150,38,1) 100%);">
+                    <h1 class="modal-title fs-5" id="modal_delete_account_label">Delete Account</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>All records associated with your account will be deleted, <u>this action cannot be undone</u>, are you sure?</p>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <form action="{% url 'authentication:delete_account' %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Yes, delete account</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 
     <script src="{% static 'bookmarks/script.js' %}"></script>
