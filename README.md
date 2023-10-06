@@ -1,5 +1,6 @@
 # READ IT LATER
-#### Video Demo:  https://youtu.be/oaS8x4JQwM4
+![read it later home screen](https://github.com/yusufziyaozbay/Read-It-Later/assets/30567327/48cf386b-2268-4633-95c2-b54fc6e606d3)
+
 #### Description:
 "Read It Later" is a user-friendly web application that allows users to effortlessly save and organize articles they wish to read at a later time. With features like categorization and customization, users can easily curate their own personalized reading list, which empower users to create a personalized reading list that suits their unique interests and preferences. This convenient tool ensures users never miss out on valuable content and promotes a seamless and enjoyable reading experience. Beyond its desktop accessibility, "Read It Later" is also optimized for mobile devices. With a responsive design, users can access their curated reading list from any device, giving them the freedom to read on the go.
 
@@ -17,6 +18,7 @@ I used django's own user model as the user model, and since I didn't extend this
 I hid sensitive information that I need to handle carefully in environment variables as it should be.
 
 To improve features like link preview (unfurl preview), I used libraries like beautifulsoup4 that scrape information from web pages. The full list of these libraries is in the requirements.txt file.
+![django requirements](https://github.com/yusufziyaozbay/Read-It-Later/assets/30567327/d2a6a46a-4986-4c59-992c-acfad90d7994)
 
 The "readitlater" file is the project file of django. Here the settings related to the project are made. Instead of collecting all the urls of the application in the "urls.py" file, I created a "urls.py" file inside the applications and included it in the main file with the "urlpatterns" command. This avoids any possible confusion.
 
@@ -25,3 +27,5 @@ The file "settings.py" contains important configurations for the project. Here, 
 Images and style files are located in the "static" file under apps. There is another file under the static file that takes the name of the application because if this is not done, two different static files with the same name can be confused even if they are in different applications, to prevent this error, the application name was written in the file.
 
 One critical decision I made while developing the app was how to store the link photos added by the user. Instead of downloading the link photo, naming it automatically and saving it to the database, I decided to save the address of the photo to the database as text. This is both a more practical solution and useful, because the information about the link is already collected during registration and the photo is retrieved with its address in this process. Also, if all the link photos were saved in the database, this would increase the size of the application in a short time. I wanted to keep the program as lightweight as possible, so I saved the photos with their addresses.
+
+![url saving](https://github.com/yusufziyaozbay/Read-It-Later/assets/30567327/6433e8a1-162b-4b64-8bbe-cf385fdc7110)
