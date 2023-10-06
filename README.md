@@ -18,6 +18,7 @@ I used django's own user model as the user model, and since I didn't extend this
 I hid sensitive information that I need to handle carefully in environment variables as it should be.
 
 To improve features like link preview (unfurl preview), I used libraries like beautifulsoup4 that scrape information from web pages. The full list of these libraries is in the requirements.txt file.
+
 ![django requirements](https://github.com/yusufziyaozbay/Read-It-Later/assets/30567327/d2a6a46a-4986-4c59-992c-acfad90d7994)
 
 The "readitlater" file is the project file of django. Here the settings related to the project are made. Instead of collecting all the urls of the application in the "urls.py" file, I created a "urls.py" file inside the applications and included it in the main file with the "urlpatterns" command. This avoids any possible confusion.
